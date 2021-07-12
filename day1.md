@@ -17,9 +17,7 @@ BIOS -> Bootloader -> kernel -> OS
 	컴퓨터 하드웨어와 운영체제를 연결하는 역할, 컴퓨터가 켜질 때 가장 먼저 동작
    
 - 작동 원리: 
-	하드웨어를 초기화하고 확인한 후, BIOS는 부팅 가능한 장치를 찾는다. 이 후, 부팅 순서는 BIOS 구성에 저장되며 BIOS가 부팅을 시도하는 디바이스를 제어한다.   
-	BIOS는 하드 드라이브에서 부팅을 시도할 때 <strong>Boot sector</strong>를 찾는다. MBR Partition layout으로 분할된 하드 드라이브의 경우,   
-        Boot sector는 첫 번째 섹터의 446 bytes 만큼 저장되며, 남은 섹터들은 512 bytes 만큼씩 저장한다. 즉, 위 작동 원리를 토대로, BIOS는 하드 디스크의 부트로더를 로드함. 
+	하드웨어를 초기화하고 확인한 후, BIOS는 부팅 가능한 장치를 찾는다. 이 후, 부팅 순서는 BIOS 구성에 저장되며 BIOS가 부팅을 시도하는 디바이스를 제어한다. BIOS는 하드 드라이브에서 부팅을 시도할 때 <strong>Boot sector</strong>를 찾는다. MBR Partition layout으로 분할된 하드 드라이브의 경우, Boot sector는 첫 번째 섹터의 446 bytes 만큼 저장되며, 남은 섹터들은 512 bytes 만큼씩 저장한다. 즉, 위 작동 원리를 토대로, BIOS는 하드 디스크의 부트로더를 로드함. 
 	
 #### 2. Boot loader 
 - 정의:    
