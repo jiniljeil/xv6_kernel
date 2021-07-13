@@ -5,9 +5,9 @@ Date: 2021-07-12
 #### 부팅이란?
 	PC가 켜진 후에 운영체제가 실행 되기 전까지 수행되는 일련의 작업 과정  
 
-#### [Operating System loading process]
+#### [Booting process]
 
-BIOS -> Bootloader -> kernel -> OS 
+BIOS -> Bootloader -> kernel
      
 #### 1. BIOS(Basic Input/Output System)   
 - 정의: 
