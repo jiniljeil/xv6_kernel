@@ -14,7 +14,7 @@ Date: 2021-07-16
 	[Kernel space]
 	3. trap 에 의해 syscall 발생, syscall 은 %eax와 인덱스를 포함하는 trap frame 으로부터 system call number 로드  
 	4. syscall 은 system call table 에 해당되는 entry 를 발생시킴  
-        5. User space program 의 인자 값을 읽어옴 (xv6 kernel: argint, argptr, argstr 등) 
+	5. User space program 의 인자 값을 읽어옴 (xv6 kernel: argint, argptr, argstr 등) 
 	6. 커널에서 서비스 처리 
    
 ## 느낀점
