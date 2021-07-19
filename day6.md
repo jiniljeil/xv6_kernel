@@ -44,7 +44,7 @@ Date: 2021-07-19
    In xv6 kernel, the policy of context switching is used on the method named Round Robin. 
    Per process has the own page table
    ```
-   struct context {  
+   struct context Context{  
        ebp, 
        ebx, 
        esi, 
