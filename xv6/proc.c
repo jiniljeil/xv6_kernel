@@ -365,38 +365,53 @@ waitpid(int pid, int *status, int options)
 } 
 
 int
-setpriority(int priority_level) 
+setpriority(int pid, int priority_level) 
 { 
    struct proc *p; 
    acquire(&ptable.lock); 
 
-   if (priority_level >= 0 && priority_level <=31) { 
-       p = myproc(); 
-       p->level = priority_level; 
-       release(&ptable.lock); 
-       yield(); 
-       return priority_level; 
+   if (priority_level >= -10 && priority_level <= 10) { 
+       if (pid == 0) { 
+           p = myproc(); 
+           p->level = priority_level; 
+           release(&ptable.lock); 
+           yield(); 
+           return 0; 
+       }else{ 
+            for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) { 
+ 	 	if (p->pid == pid) { 
+ 		    p->level = priority_level; 
+		    release(&ptable.lock); 
+		    yield();
+		    return 0;    
+ 		}	
+            }
+            release(&ptable.lock);
+	    return -1; 
+       }
    }else{
        release(&ptable.lock);
        return -1; 
    }
 }
 
-int getpriority(int pid) 
+int getpriority(int pid, int * prio) 
 { 
     struct proc *p ; 
     acquire(&ptable.lock); 
     int exist = 0 ; 
     if (pid == 0) {
-       p = myproc(); 
+       p = myproc();
+       *prio = p->level ;  
        release(&ptable.lock);
-       return p->level;
+       return 0;
     }
     for(p = ptable.proc ;  p < &ptable.proc[NPROC]; p++) { 
          if (p->pid == pid) { 
                 exist = 1;
+                *prio = p->level; 
                 release(&ptable.lock);
- 		return p->level; 
+ 		return 0; 
          }
     } 
     if(!exist) { 
@@ -420,7 +435,7 @@ scheduler(void)
   struct cpu *c = mycpu();
   c->proc = 0;
   
-  int priority_max = 0 ; 
+  int priority_max = -11 ; 
 //  struct proc *c_proc = ptable.proc;
   for(;;){
     // Enable interrupts on this processor.
@@ -457,14 +472,14 @@ scheduler(void)
              priority_max = tmp->level;  
           } 
        }
-       cprintf("MAX: %d\n", priority_max);        
-       if(priority_max == p->level) { 
+       if(priority_max == p->level) {  
           c->proc = p;
     	  switchuvm(p);
           p->state = RUNNING; 
-   
+	  priority_max = -11; 
           swtch(&(c->scheduler), p->context); 
-          switchkvm();
+          switchkvm(); 
+	  
           c->proc = 0 ;
        }
     } 

@@ -8,8 +8,8 @@ int exit(int status); /* ME */
 //int wait(void);
 int wait(int *status); /* ME */
 int waitpid(int pid, int *status, int options); /* ME */
-int setpriority(int priority_level); 
-int getpriority(int pid); 
+int setpriority(int pid, int priority_level); 
+int getpriority(int pid, int * prio); 
 int pipe(int*);
 int write(int, const void*, int);
 int read(int, void*, int);

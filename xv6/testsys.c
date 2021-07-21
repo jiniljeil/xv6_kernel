@@ -5,10 +5,10 @@
 int main(void) {
     int pid = fork() ;
     if(pid == 0) {
-         setpriority(5);
+         setpriority(pid, 5);
          while(1) {sleep(10); printf(1, "CHLID\n"); }
     }else{
-         setpriority(10);
+         setpriority(pid, 10);
          while(1) {sleep(10); printf(1, "PARENT\n"); }  
     }
     /*while(1){

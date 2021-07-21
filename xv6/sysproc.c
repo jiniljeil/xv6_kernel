@@ -115,20 +115,21 @@ int
 sys_setpriority(void) 
 {
    int level;  
-   
-   if(argint(0, &level) < 0) { 
+   int pid; 
+   if((argint(0, &pid) < 0) || (argint(1, &level) < 0)) { 
        return -1; 
    } 
 
-   return setpriority(level); 
+   return setpriority(pid, level); 
 }
 
 int
 sys_getpriority(void) 
 {
     int pid; 
-    if (argint(0, &pid) < 0) { 
+    int *prio; 
+    if ((argint(0, &pid) < 0) || (argptr(1, (char**)&prio, sizeof(int*)) < 0 )) { 
     	return -1; 
     }
-    return  getpriority(pid); 
+    return  getpriority(pid, prio); 
 }
