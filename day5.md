@@ -7,7 +7,7 @@ Date: 2021-07-16
 
 ## System call 호출 과정   
    	
-[User space] 
+[User space]
 1. 예를 들어, User space program 이 exit(1) 실행   
 2. eax register 에 system call number를 저장한 후, system call 요청   
 	
