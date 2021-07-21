@@ -61,8 +61,9 @@ int getpriority(int pid, int * prio);
    
 **getpriority**: PID 값이 0인 경우 현재 프로세스에 Priority 값을 **int * prio** 에 저장, 그 외에는 PID 값을 프로세스 테이블에서 찾아 **int * prio** 에 저장   
     
-(Code should be revised for System call: **user.h defs.h sysproc.c proc.c usys.S**)   
-    
+(Files should be revised for System call: **user.h defs.h sysproc.c proc.c usys.S**)   
+     
+     
 [Priority Scheduler]  
 ```c
 void
@@ -109,8 +110,8 @@ scheduler(void)
    
 이 후, Starvation problem, Inheritance 문제도 해결할 예정이다.   
 
-#### The other Scheduling method  
-**1. First in First out (FIFO)**
+### The other Scheduling method  
+**1. First in First out (FIFO)**    
 **2. Shortest Job First (SJF)**   
 **3. Shortest Time-to-Completion First (STCF)**   
 **4. Round Robin**  
