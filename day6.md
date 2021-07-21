@@ -4,8 +4,7 @@ Date: 2021-07-19
 
 ## System call flow 
    
-  과정
-   ```
+[과정]
 1. call wait() in the user program (%eax register stores the syscall number, invoke system call by int %eax instruction)    
        
 2. Trap is taken place. After that, build the trapframe, invoke the stack switch, and call trap() in the trapasm.S  
@@ -15,12 +14,10 @@ Date: 2021-07-19
 4. After that, find the sys_wait() in the system call table as index and call sys_wait(). 
        
 5. bring the argument by using argptr() and inserting the arguments in the wait function, call wait(); 
-   ```
 
 ## Context Switching 
 
    과정
-   ```
 1. call main() in kernel -> mpmain() -> scheduler()  
    
 2. If time interrupt is invoked, call yield() 
@@ -39,7 +36,6 @@ Date: 2021-07-19
         
 8. After that, the registers of the scheduler push on the kernel stack, change the %esp register and load the registers of the new process by calling swtch().    
        
-   ```
    In the xv6 kernel, the policy of context switching is used on the method named Round Robin. 
    Per process has the own page table
    ```
