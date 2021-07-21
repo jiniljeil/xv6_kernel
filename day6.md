@@ -4,44 +4,43 @@ Date: 2021-07-19
 
 ## System call flow 
    
-   과정
+  과정
    ```
-   1. call wait() in the user program (%eax register stores the syscall number, invoke system call by int %eax instruction)    
+1. call wait() in the user program (%eax register stores the syscall number, invoke system call by int %eax instruction)    
        
-   2. Trap is taken place. After that, build the trapframe, invoke the stack switch, and call trap() in the trapasm.S  
+2. Trap is taken place. After that, build the trapframe, invoke the stack switch, and call trap() in the trapasm.S  
        
-   3. If trap is same with T_SYSCALL(=64), call syscall() in trap.c  
+3. If trap is same with T_SYSCALL(=64), call syscall() in trap.c  
         
-   4. After that, find the sys_wait() in the system call table as index and call sys_wait(). 
+4. After that, find the sys_wait() in the system call table as index and call sys_wait(). 
        
-   5. bring the argument by using argptr() and inserting the arguments in the wait function, call wait(); 
+5. bring the argument by using argptr() and inserting the arguments in the wait function, call wait(); 
    ```
 
 ## Context Switching 
 
    과정
    ```
-   1. call main() in kernel -> mpmain() -> scheduler()  
+1. call main() in kernel -> mpmain() -> scheduler()  
    
-   2. If time interrupt is invoked, call yield() 
+2. If time interrupt is invoked, call yield() 
       
-   3. After the ptable is locked and the process changes the state of process to RUNNABLE, call sched(). 
+3. After the ptable is locked and the process changes the state of process to RUNNABLE, call sched(). 
       (Then, the reason of the ptable is locked is that <strong>the process running the scheduler()</strong>
        and <strong>the process conducting the work in the kernel</strong> are existed.)   
        
-   4. After that, the process put into disable interrupt state and call the swtch().  
+4. After that, the process put into disable interrupt state and call the swtch().  
        
-   5. the registers of the current process push on the kernel stack, change the %esp register, and load the registers of the scheduler.  
+5. the registers of the current process push on the kernel stack, change the %esp register, and load the registers of the scheduler.  
        
-   6. Switch to the kernel page table, choose the process to switch in the process table, and switch to process's address space (page table of the process)   
+6. Switch to the kernel page table, choose the process to switch in the process table, and switch to process's address space (page table of the process)   
        
-   7. the process is changed to the state is RUNNING. 
+7. the process is changed to the state is RUNNING. 
         
-   8. After that, the registers of the scheduler push on the kernel stack, change the %esp register and load the registers of the new process by calling swtch().    
+8. After that, the registers of the scheduler push on the kernel stack, change the %esp register and load the registers of the new process by calling swtch().    
        
    ```
-   
-   In xv6 kernel, the policy of context switching is used on the method named Round Robin. 
+   In the xv6 kernel, the policy of context switching is used on the method named Round Robin. 
    Per process has the own page table
    ```
    struct context{  
