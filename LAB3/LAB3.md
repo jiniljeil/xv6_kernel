@@ -78,7 +78,7 @@ Exec()
    (loaduvm uses wlakpgdir to find the physical address of the allocated memory at which to write each page of the ELF segment, and readi to read from the file)    
 
 ## 느낀 점  
-   메모리가 어떻게 할당되며, 메모리에 데이터가 어떤 과정으로 로드되는지 알아볼 수 있었다. 또한 스택 영역을 높은 주소 영역에 놓는 작업을 시도하였다. 
+   메모리가 어떻게 할당되며, 메모리에 데이터가 어떤 과정으로 로드되는지 알아볼 수 있었다. 또한 스택 영역을 높은 주소 영역에 놓는 작업을 시도하면서, 동작 순서에 대해서도 공부할 수 있었다. 
 
 
 
