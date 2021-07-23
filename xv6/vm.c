@@ -68,8 +68,9 @@ mappages(pde_t *pgdir, void *va, uint size, uint pa, int perm)
   for(;;){
     if((pte = walkpgdir(pgdir, a, 1)) == 0)
       return -1;
-    if(*pte & PTE_P)
+    if(*pte & PTE_P){ 
       panic("remap");
+    }
     *pte = pa | perm | PTE_P;
     if(a == last)
       break;
@@ -336,6 +337,23 @@ copyuvm(pde_t *pgdir, uint sz)
       kfree(mem);
       goto bad;
     }
+  }
+  
+  /*ME*/
+  for(i = 1; i <= myproc()->numPages; i++) { 
+     if((pte = walkpgdir(pgdir, (void *) (STACKTOP - PGSIZE * i + 1 ) , 0)) == 0)
+       panic("copyuvm: pte should exist");
+     if(!(*pte & PTE_P))
+       panic("copyuvm: page not present");
+     pa = PTE_ADDR(*pte);
+     flags = PTE_FLAGS(*pte);
+     if((mem = kalloc()) == 0)
+        goto bad;
+     memmove(mem, (char*)P2V(pa), PGSIZE);
+     if(mappages(d, (void*)(STACKTOP - PGSIZE * i + 1), PGSIZE, V2P(mem), flags) < 0) {
+       kfree(mem);
+       goto bad;
+     }
   }
   return d;
 
